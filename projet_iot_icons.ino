@@ -29,7 +29,8 @@ String rootHTML = "\
   <br><br> <button type='submit' name='toggle' value='1'>  :)  </button>\
   <br><br> <button type='submit' name='toggle' value='2'>  :(  </button>\
   <br><br> <button type='submit' name='toggle' value='0'>  off  </button>\
-  <br><br> <button type='submit' name='toggle' value='3'>  dépassement  </button>\
+  <br><br> <button type='submit' name='toggle' value='3'>  Depassement  </button>\
+  <br><br> <button type='submit' name='toggle' value='4'>  Attention  </button>\
 </form>\
 <br> No LED changed.\
 </body> </html>\
@@ -108,10 +109,11 @@ void LEDtoggle(String smiley) {
     
     
     switch (smiley_int) {
-        case 0 : set_blank();  Serial.print("OFF"); break;
-        case 1 : smiley_happy() ; Serial.print("smiley happy") ; break;
-        case 2 : smiley_not_happy() ; Serial.print("smiey non happy"); break;
-        case 3 : arrow() ; Serial.print("arrow"); break;
+        case 0 : set_blank();  Serial.println("OFF"); break;
+        case 1 : smiley_happy() ; Serial.println("smiley happy") ; break;
+        case 2 : smiley_not_happy() ; Serial.println("smiley non happy"); break;
+        case 3 : arrow() ; Serial.println("arrow"); break;
+        case 4 : attention() ; Serial.println("attention"); break;
          
         default:
             Serial.print("LEDtoggle() switch failed!");
@@ -140,7 +142,21 @@ void loop(){
   server.handleClient();
   }
 
+void breath(int delayed){
+  for(int i=0; i <100 ; i++){
+    FastLED.setBrightness(i);
+    FastLED.show();
+    delay(delayed);
+  }
+    for(int i=100; i>0 ; i--){
+    FastLED.setBrightness(i);
+    FastLED.show();
+    delay(delayed);
+  }
+}
+
 void set_blank(){
+  FastLED.setBrightness(16);
   Serial.print("Je suis dans le blanc");
   for(int i=0; i<64; i++){
     leds[i] = CRGB(0,0,0);
@@ -210,6 +226,28 @@ void arrow(){
     moveImage(5000);
     set_blank();
     FastLED.show();
+}
+
+
+void attention(){
+    leds[3] = 0x00FF00;
+    leds[4] = 0x00FF00;
+    leds[11] = 0x00FF00;
+    leds[12] = 0x00FF00;
+    leds[19] = 0x00FF00;
+    leds[20] = 0x00FF00;
+    leds[27] = 0x00FF00;
+    leds[28] = 0x00FF00;
+    leds[35] = 0x00FF00;
+    leds[36] = 0x00FF00;
+    leds[51] = 0x00FF00;
+    leds[52] = 0x00FF00;
+    leds[59] = 0x00FF00;
+    leds[60] = 0x00FF00;
+    for(int i = 0; i<10 ; i++){
+      breath(5); 
+    }
+    set_blank();
 }
 
 void moveImage(int delay_time) {
