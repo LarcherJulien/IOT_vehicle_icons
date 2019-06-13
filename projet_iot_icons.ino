@@ -29,6 +29,7 @@ String rootHTML = "\
   <br><br> <button type='submit' name='toggle' value='1'>  :)  </button>\
   <br><br> <button type='submit' name='toggle' value='2'>  :(  </button>\
   <br><br> <button type='submit' name='toggle' value='0'>  off  </button>\
+  <br><br> <button type='submit' name='toggle' value='3'>  dépassement  </button>\
 </form>\
 <br> No LED changed.\
 </body> </html>\
@@ -110,6 +111,8 @@ void LEDtoggle(String smiley) {
         case 0 : set_blank();  Serial.print("OFF"); break;
         case 1 : smiley_happy() ; Serial.print("smiley happy") ; break;
         case 2 : smiley_not_happy() ; Serial.print("smiey non happy"); break;
+        case 3 : arrow() ; Serial.print("arrow"); break;
+         
         default:
             Serial.print("LEDtoggle() switch failed!");
             return;
@@ -182,4 +185,49 @@ void smiley_not_happy(){
     delay(5000);
     set_blank();
     FastLED.show();
+}
+
+void arrow(){
+    leds[11] = CRGB(0,0,255);
+    leds[12] = CRGB(0,0,255);
+    leds[18] = CRGB(0,0,255);
+    leds[19] = CRGB(0,0,255);
+    leds[20] = CRGB(0,0,255);
+    leds[21] = CRGB(0,0,255);
+    leds[25] = CRGB(0,0,255);
+    leds[26] = CRGB(0,0,255);
+    leds[27] = CRGB(0,0,255);
+    leds[28] = CRGB(0,0,255);
+    leds[29] = CRGB(0,0,255);
+    leds[30] = CRGB(0,0,255);
+    leds[35] = CRGB(0,0,255);
+    leds[36] = CRGB(0,0,255);
+    leds[43] = CRGB(0,0,255);
+    leds[44] = CRGB(0,0,255);
+    leds[51] = CRGB(0,0,255);
+    leds[52] = CRGB(0,0,255);
+    FastLED.show();
+    moveImage(5000);
+    set_blank();
+    FastLED.show();
+}
+
+void moveImage(int delay_time) {
+  for (int d = 0; d < delay_time/250; d ++) {
+    CRGB new_leds[NUM_LEDS];
+    delay(250); 
+    for (int i = 0; i < NUM_LEDS; i++) {
+      if (leds[i].r =! 0 or leds[i].g != 0 or leds[i].b != 0) {
+        int new_i = i - 8;
+        if (new_i < 0 ) {
+          new_i = 64 + new_i;
+        }
+        new_leds[new_i] = CRGB(leds[i].r, leds[i].g, leds[i].b);
+      }
+    }
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = new_leds[i];
+    }
+    FastLED.show();
+  }
 }
