@@ -25,24 +25,22 @@ const char *ssid = "Livebox_7766";
 // Warning: only use simple quotes in the html (no double)
 String rootHTML = "\
 <!doctype html> <html> <head> <title> Choose your Smiley  </title> </head> <body>\
-<br> <br> Analog input: xxx V (<a href='/'>refresh<a>)\
 <h1 style='padding-left:90px; font-size:50px'>Choisissez votre icone : </h1>\
 <form method='get' action='/set'>\
-  <br><br> <button type='submit' name='toggle' value='1', style='background:\#54D559; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:70px'>  Content  </button>\
-  <br><br> <button type='submit' name='toggle' value='2', style='background:\#D56F54; font-size:28px ;cursor:pointer; color:black; height:100px; width:400px; margin-left:70px'>  Pas content  </button>\
-  <br><br> <button type='submit' name='toggle' value='3', style='background:\#54B5D5; font-size:28px ;cursor:pointer;color:black; height:100px; width:400px; margin-left:70px'>  Depassement  </button>\
-  <br><br> <button type='submit' name='toggle' value='4', style='background:black; font-size:28px; cursor:pointer; color:white; height:100px; width:400px; margin-left:70px'>  Attention  </button>\
-  <br><br> <button type='submit' name='toggle' value='5', style='background:\#EE78C8; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:70px'>  FUCK  </button>\
-  <br><br> <button type='submit' name='toggle' value='6', style='background:\#28DF14; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:70px'>  OUI  </button>\
-  <br><br> <button type='submit' name='toggle' value='7', style='background:\#F93E28; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:70px'>  NON  </button>\
+  <br><br> <button type='submit' name='toggle' value='1', style='background:\#54D559; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:140px'>  Content  </button>\
+  <br><br> <button type='submit' name='toggle' value='2', style='background:\#D56F54; font-size:28px ;cursor:pointer; color:black; height:100px; width:400px; margin-left:140px'>  Pas content  </button>\
+  <br><br> <button type='submit' name='toggle' value='3', style='background:\#54B5D5; font-size:28px ;cursor:pointer;color:black; height:100px; width:400px; margin-left:140px'>  Depassement  </button>\
+  <br><br> <button type='submit' name='toggle' value='4', style='background:black; font-size:28px; cursor:pointer; color:white; height:100px; width:400px; margin-left:140px'>  Attention  </button>\
+  <br><br> <button type='submit' name='toggle' value='5', style='background:\#EE78C8; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:140px'>  FUCK  </button>\
+  <br><br> <button type='submit' name='toggle' value='6', style='background:\#28DF14; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:140px'>  OUI  </button>\
+  <br><br> <button type='submit' name='toggle' value='7', style='background:\#F93E28; font-size:28px; cursor:pointer; color:black; height:100px; width:400px; margin-left:140px'>  NON  </button>\
 </form>\
-<br> <span>Content : <b id=\"content\">value<b/></span> <br> <br>\
-<br> <span>Pas content : <b id=\"pasContent\">value<b/></span> <br> <br>\
-<br> <span>Depassement : <b id=\"depassement\">value<b/></span> <br> <br>\
-<br> <span>Depassement : <b id=\"attention\">value<b/></span> <br> <br>\
-<br> <span>Fuck : <b id=\"fuck\">value<b/></span> <br> <br>\
-<br> <span>Oui : <b id=\"oui\">value<b/></span> <br> <br>\
-<br> <span>Non : <b id=\"non\">value<b/></span> <br> <br>\
+<br><br><br><br>\
+<table style='border-collapse: collapse; width: 800px'>\
+<tr> <td style='border: 1px solid #ddd; padding: 15px;'>Content</td> <td style='border: 1px solid #ddd; padding: 15px;'>Pas content</td> <td style='border: 1px solid #ddd; padding: 15px;'>Depassement</td> <td style='border: 1px solid #ddd; padding: 15px;'>Attention</td> <td style='border: 1px solid #ddd; padding: 15px;'>Fuck</td> <td style='border: 1px solid #ddd; padding: 15px;'>Oui</td> <td style='border: 1px solid #ddd; padding: 15px;'>Non</td> </tr>\
+<tr> <td style='border: 1px solid #ddd; padding: 15px; text-align: center;'><b id=\"content\">value<b/></td> <td style='border: 1px solid #ddd; padding: 15px;  text-align: center;'><b id=\"pasContent\">value<b/></td> <td style='border: 1px solid #ddd; padding: 15px; text-align: center;'><b id=\"depassement\">value<b/></td> <td style='border: 1px solid #ddd; padding: 15px;  text-align: center;'><b id=\"attention\">value<b/></td> <td style='border: 1px solid #ddd; padding: 15px; text-align: center;'><b id=\"fuck\">value<b/></td> <td style='border: 1px solid #ddd; padding: 15px; text-align: center;'><b id=\"oui\">value<b/></td> <td style='border: 1px solid #ddd; padding: 15px; text-align: center;'><b id=\"non\">value<b/></td> </tr>\
+</table>\
+<br> <br> Analog input: xxx V (<a href='/'>refresh<a>)\
 </body>\
 <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\
 <script>setInterval( () => { $.ajax('/data', { success: (d, ts, j) => { $('#content').html(d.data[0]); \
