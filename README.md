@@ -1,20 +1,20 @@
 # IOT vehicle icons
 
-
 <p>
-Ce projet consiste à construire des plaques de LED permettant d’afficher une icône choisie sur une page web. 
-Le but serait de fixer ces plaques à l’avant et à l’arrière du véhicule pour pouvoir signifier aux autres usagers de la route nos intentions. 
+This project consists in building LED panels to display a chosen icon choosed on a web page. 
+The aim would be to attach these boards to the front and rear of the vehicle so that we can inform other road users of our intentions. 
 
-Grâce à cela nous pouvons afficher sur la plaque de LED si nous voulons :
+Thanks to that we can display on the panel if we want to:
 <ul>
-<li>Dépasser un usager</li>
-<li>Remercier un usager</li>
-<li>Signifier son agacement</li>
-<li>Demander à un usager de faire attention</li>
-<li>Accepter la demande d'un usager</li>
-<li>Refuser la demande d'un usager</li>
+<li>Go beyond a user</li>
+<li>Thank a user</li>
+<li>Signify your annoyance</li>
+<li>Ask a user to be careful</li>
+<li>Accept a user's request</li>
+<li>Refuse a user's request</li>
+<li>Insult a user</li>
 </ul>
-Cela permettrait de communiquer entre usager tout en évitant les ambiguïtés ainsi que possiblement, de nombreux accidents. 
+This would make communication between users easier while avoiding ambiguities and possibly, many accidents. 
 </p>
 
 # Requirements
@@ -40,5 +40,19 @@ FastLED : https://github.com/FastLED/FastLED
 2. Open `Sketch` -> `Include Library` -> `Add .ZIP Library`
 
 ## Scheme
-![alt text](https://raw.githubusercontent.com/LarcherJulien/IOT_vehicle_icons/new/masterpath/to/img.png)
+![Circuit](https://github.com/LarcherJulien/IOT_vehicle_icons/blob/master/scheme.PNG?raw=true "Title")
 
+# Run
+To run this project you need to open projet_iot_icons.ino with Arduino then 
+<br/>change the SSID value to yours : `const char *ssid = "your ssid";`
+<br/>If you run for the first time or wants to reset your wifi parametes you need to uncomment `wifiManager.resetSettings();`
+<br/>Upload the code and Open logs
+<br/>Connect to your SSID then open your navigator to change WIFI parameters to connect the iot to your access point.
+<br/>Get the IP address in logs then connect to it via http
+<br/>Enjoy !
+  
+## Authors
+
+* **Charles-Maxime Gauriat**
+* **Julien Larcher**
+* **Charlotte Le Du**
