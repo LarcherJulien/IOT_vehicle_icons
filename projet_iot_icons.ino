@@ -25,14 +25,14 @@ const char *ssid = "Livebox_7766";
 String rootHTML = "\
 <!doctype html> <html> <head> <title> Choose your Smiley  </title> </head> <body>\
 <br> <br> Analog input: xxx V (<a href='/'>refresh<a>)\
+<h1>Choisissez votre icone : </h1>\
 <form method='get' action='/set'>\
-  <br><br> <button type='submit' name='toggle' value='1'>  :)  </button>\
-  <br><br> <button type='submit' name='toggle' value='2'>  :(  </button>\
-  <br><br> <button type='submit' name='toggle' value='0'>  off  </button>\
-  <br><br> <button type='submit' name='toggle' value='3'>  Depassement  </button>\
-  <br><br> <button type='submit' name='toggle' value='4'>  Attention  </button>\
+  <br><br> <button type='submit' name='toggle' value='1', style='background:\#54D559; cursor:pointer; color:black; height:35px; width:130px'>  :)  </button>\
+  <br><br> <button type='submit' name='toggle' value='2', style='background:\#D56F54 ;cursor:pointer; color:black; height:35px; width:130px'>  :(  </button>\
+  <br><br> <button type='submit' name='toggle' value='3', style='background:\#54B5D5 ;cursor:pointer;color:black; height:35px; width:130px'>  Depassement  </button>\
+  <br><br> <button type='submit' name='toggle' value='4', style='background:black; cursor:pointer; color:white; height:35px; width:130px'>  Attention  </button>\
+  <br><br> <button type='submit' name='toggle' value='0', style='cursor:pointer; height:35px; width:130px'>  off  </button>\
 </form>\
-<br> No LED changed.\
 </body> </html>\
 ";
 
@@ -138,7 +138,7 @@ void setup() {
     set_blank();
     }
 
-void loop(){
+void loop(){  
   server.handleClient();
   }
 
