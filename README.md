@@ -51,7 +51,7 @@ To run this project you need to open projet_iot_icons.ino with Arduino then
 <br/>Get the IP address in logs then connect to it via http
 <br/>Enjoy !
   
-## Auteurs
+## Authors
 
 * **Charles-Maxime Gauriat**
 * **Julien Larcher**
