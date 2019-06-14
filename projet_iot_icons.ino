@@ -15,7 +15,7 @@
 CRGB leds[NUM_LEDS];
 
 typedef enum color_e {SMILEY_CONTENT, SMILEY_MALHEUREUX,OFF} smiley;
-int dataValues[] = {0, 0, 0, 0, 0};
+int dataValues[] = {0, 0, 0, 0, 0, 0 , 0 ,0};
 
 /*****Initialization*****/
 ESP8266WebServer server(80);
@@ -32,14 +32,27 @@ String rootHTML = "\
   <br><br> <button type='submit' name='toggle' value='0'>  off  </button>\
   <br><br> <button type='submit' name='toggle' value='3'>  Depassement  </button>\
   <br><br> <button type='submit' name='toggle' value='4'>  Attention  </button>\
+  <br><br> <button type='submit' name='toggle' value='5'>  FUCK  </button>\
+  <br><br> <button type='submit' name='toggle' value='6'>  OUI  </button>\
+  <br><br> <button type='submit' name='toggle' value='7'>  NON  </button>\
 </form>\
-<br> <br> <span>Content : <b id=\"content\">value<b/></span> <br> <br>\
-<br> <br> <span>Pas content : <b id=\"pasContent\">value<b/></span> <br> <br>\
-<br> <br> <span>Depassement : <b id=\"depassement\">value<b/></span> <br> <br>\
-<br> <br> <span>Depassement : <b id=\"attention\">value<b/></span> <br> <br>\
+<br> <span>Content : <b id=\"content\">value<b/></span> <br> <br>\
+<br> <span>Pas content : <b id=\"pasContent\">value<b/></span> <br> <br>\
+<br> <span>Depassement : <b id=\"depassement\">value<b/></span> <br> <br>\
+<br> <span>Depassement : <b id=\"attention\">value<b/></span> <br> <br>\
+<br> <span>Fuck : <b id=\"fuck\">value<b/></span> <br> <br>\
+<br> <span>Oui : <b id=\"oui\">value<b/></span> <br> <br>\
+<br> <span>Non : <b id=\"non\">value<b/></span> <br> <br>\
 </body>\
 <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\
-<script>setInterval( () => { $.ajax('/data', { success: (d, ts, j) => { $('#content').html(d.data[0]); $('#pasContent').html(d.data[1]) ; $('#depassement').html(d.data[2]) ; $('#attention').html(d.data[3]) } }) }, 900);</script>\
+<script>setInterval( () => { $.ajax('/data', { success: (d, ts, j) => { $('#content').html(d.data[0]); \
+$('#pasContent').html(d.data[1]) ; \
+$('#depassement').html(d.data[2]) ; \
+$('#attention').html(d.data[3]); \
+$('#fuck').html(d.data[4]) ; \
+$('#oui').html(d.data[5]) ; \
+$('#non').html(d.data[6]); \
+} }) }, 900);</script>\
 </body> </html>\
 ";
 
@@ -56,7 +69,7 @@ void handleRoot() {
 }
 
 void handleGetData() {
-  String answer = "{\"data\": [" + String(dataValues[1]) + ", " + String(dataValues[2]) + ", " + String(dataValues[3]) + ", " + String(dataValues[4]) + "]}";
+  String answer = "{\"data\": [" + String(dataValues[1]) + ", " + String(dataValues[2]) + ", " + String(dataValues[3]) + ", " + String(dataValues[4]) + ", " + String(dataValues[5]) + ", " + String(dataValues[6]) + ", " + String(dataValues[7])+ "]}";
   server.send(200, "application/json", answer);
 }
 
@@ -127,7 +140,9 @@ void LEDtoggle(String smiley) {
         case 2 : smiley_not_happy() ; Serial.println("smiley non happy"); dataValues[2]++;  break;
         case 3 : arrow() ; Serial.println("arrow"); dataValues[3]++; break;
         case 4 : attention() ; Serial.println("attention"); dataValues[4]++;  break;
-         
+        case 5 : fuck() ; Serial.println("fuck"); dataValues[5]++;  break;
+        case 6 : oui() ; Serial.println("oui"); dataValues[6]++;  break; 
+        case 7 : non() ; Serial.println("non"); dataValues[7]++;  break;
         default:
             Serial.print("LEDtoggle() switch failed!");
             return;
@@ -211,9 +226,40 @@ void arrow(){
 
 
 void attention(){
+    set_blank();
     int num_leds[] = {3,4,11,12,19,20,27,28,35,36,51,52,59,60};
     displayImage(num_leds, 14, 0x00FF00);
     for(int i = 0; i<10 ; i++){
+      breath(5); 
+    }
+    set_blank();
+}
+
+void fuck(){
+    set_blank();
+    int num_leds[] = {3, 11, 19, 26,27,28, 33,34,35,36, 41,42,43,44,45, 49,50,51,52,53, 58,59,60};
+    displayImage(num_leds, 23, 0x03FEA2);
+    for(int i = 0; i<5 ; i++){
+      breath(5); 
+    }
+    set_blank();
+}
+
+void oui(){
+    set_blank();
+    int num_leds[] = {6,7, 14,15, 21,22, 29,30, 32,33,36,37, 41,42,44,45, 50,51,52, 59,60};
+    displayImage(num_leds, 21, 0xFF0000);
+    for(int i = 0; i<5 ; i++){
+      breath(5); 
+    }
+    set_blank();
+}
+
+void non(){
+    set_blank();
+    int num_leds[] = {0,1,6,7, 8,9,10,13,14,15, 17,18,19,20,21,22, 26,27,28,29, 34,35,36,37, 41,42,43,44,45,46, 48,49,50,53,54,55, 56,57,62,63};
+    displayImage(num_leds, 40, 0x00FF00);
+    for(int i = 0; i<5 ; i++){
       breath(5); 
     }
     set_blank();
