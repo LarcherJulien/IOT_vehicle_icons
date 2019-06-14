@@ -15,6 +15,7 @@
 CRGB leds[NUM_LEDS];
 
 typedef enum color_e {SMILEY_CONTENT, SMILEY_MALHEUREUX,OFF} smiley;
+int dataValues[] = {0, 0, 0, 0, 0};
 
 /*****Initialization*****/
 ESP8266WebServer server(80);
@@ -32,7 +33,13 @@ String rootHTML = "\
   <br><br> <button type='submit' name='toggle' value='3'>  Depassement  </button>\
   <br><br> <button type='submit' name='toggle' value='4'>  Attention  </button>\
 </form>\
-<br> No LED changed.\
+<br> <br> <span>Content : <b id=\"content\">value<b/></span> <br> <br>\
+<br> <br> <span>Pas content : <b id=\"pasContent\">value<b/></span> <br> <br>\
+<br> <br> <span>Depassement : <b id=\"depassement\">value<b/></span> <br> <br>\
+<br> <br> <span>Depassement : <b id=\"attention\">value<b/></span> <br> <br>\
+</body>\
+<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\
+<script>setInterval( () => { $.ajax('/data', { success: (d, ts, j) => { $('#content').html(d.data[0]); $('#pasContent').html(d.data[1]) ; $('#depassement').html(d.data[2]) ; $('#attention').html(d.data[3]) } }) }, 900);</script>\
 </body> </html>\
 ";
 
@@ -46,6 +53,11 @@ String getHTML() {
 
 void handleRoot() {
     server.send(200, "text/html", getHTML());
+}
+
+void handleGetData() {
+  String answer = "{\"data\": [" + String(dataValues[1]) + ", " + String(dataValues[2]) + ", " + String(dataValues[3]) + ", " + String(dataValues[4]) + "]}";
+  server.send(200, "application/json", answer);
 }
 
 void configModeCallback(WiFiManager *myWiFiManager) {
@@ -75,6 +87,7 @@ void setupWifi() {
 void setupServer() {
     server.on("/", handleRoot);
     server.on("/set", handleLEDs);
+    server.on("/data", handleGetData);
     server.begin();
     Serial.println("HTTP server started");
 }
@@ -109,11 +122,11 @@ void LEDtoggle(String smiley) {
     
     
     switch (smiley_int) {
-        case 0 : set_blank();  Serial.println("OFF"); break;
-        case 1 : smiley_happy() ; Serial.println("smiley happy") ; break;
-        case 2 : smiley_not_happy() ; Serial.println("smiley non happy"); break;
-        case 3 : arrow() ; Serial.println("arrow"); break;
-        case 4 : attention() ; Serial.println("attention"); break;
+        case 0 : set_blank();  Serial.println("OFF"); dataValues[0]++;  break;
+        case 1 : smiley_happy() ; Serial.println("smiley happy") ; dataValues[1]++; break;
+        case 2 : smiley_not_happy() ; Serial.println("smiley non happy"); dataValues[2]++;  break;
+        case 3 : arrow() ; Serial.println("arrow"); dataValues[3]++; break;
+        case 4 : attention() ; Serial.println("attention"); dataValues[4]++;  break;
          
         default:
             Serial.print("LEDtoggle() switch failed!");
@@ -124,7 +137,7 @@ void LEDtoggle(String smiley) {
 }
 void setup() {
   
-  Serial.println("Starting WiFi.");
+    Serial.println("Starting WiFi.");
 
     Serial.begin(115200);
     setupWifi();
@@ -134,13 +147,12 @@ void setup() {
     delay(2000);
     FastLED.setBrightness(BRIGHTNESS);
     FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
-
     set_blank();
-    }
+}
 
 void loop(){
   server.handleClient();
-  }
+}
 
 void breath(int delayed){
   for(int i=0; i <100 ; i++){
@@ -168,16 +180,8 @@ void set_blank(){
 void smiley_happy(){
     Serial.print("Je suis dans le smiley happy");
     set_blank();
-    leds[10] = CRGB(255,0,0);
-    leds[13] = CRGB(255,0,0);
-    leds[18] = CRGB(255,0,0);
-    leds[21] = CRGB(255,0,0);
-    leds[41] = CRGB(255,0,0);
-    leds[46] = CRGB(255,0,0);
-    leds[50] = CRGB(255,0,0);
-    leds[51] = CRGB(255,0,0);
-    leds[52] = CRGB(255,0,0);
-    leds[53] = CRGB(255,0,0);
+    int num_leds[] = {10, 13, 18, 21, 41, 46, 50, 51, 52, 53};
+    displayImage(num_leds, 10, 0xFF0000);
     FastLED.show();
     delay(5000);
     set_blank();
@@ -187,16 +191,8 @@ void smiley_happy(){
 void smiley_not_happy(){
   Serial.print("Je suis dans le smiley non happy");
     set_blank();
-    leds[10] = CRGB(0,0,255);
-    leds[13] = CRGB(0,0,255);
-    leds[18] = CRGB(0,0,255);
-    leds[21] = CRGB(0,0,255);
-    leds[49] = CRGB(0,0,255);
-    leds[54] = CRGB(0,0,255);
-    leds[42] = CRGB(0,0,255);
-    leds[43] = CRGB(0,0,255);
-    leds[44] = CRGB(0,0,255);
-    leds[45] = CRGB(0,0,255);
+    int num_leds[] = {10, 13, 18, 21, 49, 54, 42, 43, 44, 45};
+    displayImage(num_leds, 10, 0x00FF00);
     FastLED.show();
     delay(5000);
     set_blank();
@@ -204,24 +200,9 @@ void smiley_not_happy(){
 }
 
 void arrow(){
-    leds[11] = CRGB(0,0,255);
-    leds[12] = CRGB(0,0,255);
-    leds[18] = CRGB(0,0,255);
-    leds[19] = CRGB(0,0,255);
-    leds[20] = CRGB(0,0,255);
-    leds[21] = CRGB(0,0,255);
-    leds[25] = CRGB(0,0,255);
-    leds[26] = CRGB(0,0,255);
-    leds[27] = CRGB(0,0,255);
-    leds[28] = CRGB(0,0,255);
-    leds[29] = CRGB(0,0,255);
-    leds[30] = CRGB(0,0,255);
-    leds[35] = CRGB(0,0,255);
-    leds[36] = CRGB(0,0,255);
-    leds[43] = CRGB(0,0,255);
-    leds[44] = CRGB(0,0,255);
-    leds[51] = CRGB(0,0,255);
-    leds[52] = CRGB(0,0,255);
+    set_blank();
+    int num_leds[] = {11, 12, 18, 19, 20, 21, 25, 26, 27, 28, 29, 30, 35, 36, 43, 44, 51, 52};
+    displayImage(num_leds, 18, 0x0000FF);
     FastLED.show();
     moveImage(5000);
     set_blank();
@@ -230,24 +211,18 @@ void arrow(){
 
 
 void attention(){
-    leds[3] = 0x00FF00;
-    leds[4] = 0x00FF00;
-    leds[11] = 0x00FF00;
-    leds[12] = 0x00FF00;
-    leds[19] = 0x00FF00;
-    leds[20] = 0x00FF00;
-    leds[27] = 0x00FF00;
-    leds[28] = 0x00FF00;
-    leds[35] = 0x00FF00;
-    leds[36] = 0x00FF00;
-    leds[51] = 0x00FF00;
-    leds[52] = 0x00FF00;
-    leds[59] = 0x00FF00;
-    leds[60] = 0x00FF00;
+    int num_leds[] = {3,4,11,12,19,20,27,28,35,36,51,52,59,60};
+    displayImage(num_leds, 14, 0x00FF00);
     for(int i = 0; i<10 ; i++){
       breath(5); 
     }
     set_blank();
+}
+
+void displayImage(int num_leds[], int size_leds, int color) {
+  for (int i = 0; i < size_leds; i++) {
+    leds[num_leds[i]] = color;
+  }
 }
 
 void moveImage(int delay_time) {
