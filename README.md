@@ -42,7 +42,7 @@ FastLED : https://github.com/FastLED/FastLED
 ## Scheme
 ![Circuit](https://github.com/LarcherJulien/IOT_vehicle_icons/blob/master/scheme.PNG?raw=true "Title")
 
-# RUN
+# Run
 To run this project you need to open projet_iot_icons.ino with Arduino then 
 <br/>change the SSID value to yours : `const char *ssid = "your ssid";`
 <br/>If you run for the first time or wants to reset your wifi parametes you need to uncomment `wifiManager.resetSettings();`
